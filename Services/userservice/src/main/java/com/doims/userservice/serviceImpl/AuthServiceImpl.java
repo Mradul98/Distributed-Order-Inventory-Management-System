@@ -4,6 +4,7 @@ import com.doims.userservice.config.PasswordConfig;
 import com.doims.userservice.dto.ApiResponse;
 import com.doims.userservice.dto.RegisterRequest;
 import com.doims.userservice.entity.UserEntity;
+import com.doims.userservice.exception.EmailAlreadyExistsException;
 import com.doims.userservice.repository.UserRepository;
 import com.doims.userservice.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
         //checking is email already present
         if(userRepository.findByEmail(registerRequest.getEmail()).isPresent())
         {
-            return new ApiResponse("Email Already Exists",false);
+            throw new EmailAlreadyExistsException("Email already exists");
         }
 
         UserEntity user=new UserEntity();

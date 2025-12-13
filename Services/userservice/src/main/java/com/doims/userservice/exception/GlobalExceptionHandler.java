@@ -62,5 +62,33 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handelUserNotFound(UserNotFoundException ex)
+    {
+        return new ResponseEntity<>(
+                new ErrorResponse(
+                        ex.getMessage(),
+                        "USER_404",
+                        false,
+                        LocalDateTime.now()
+                ),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handelInvalidCredentials(InvalidCredentialsException ex)
+    {
+        return new ResponseEntity<>(
+                new ErrorResponse(
+                        ex.getMessage(),
+                        "AUTH_401",
+                        false,
+                        LocalDateTime.now()
+                ),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
+
 
 }

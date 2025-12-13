@@ -1,6 +1,8 @@
 package com.doims.userservice.controller;
 
 import com.doims.userservice.dto.ApiResponse;
+import com.doims.userservice.dto.LoginRequest;
+import com.doims.userservice.dto.LoginResponse;
 import com.doims.userservice.dto.RegisterRequest;
 import com.doims.userservice.service.AuthService;
 import jakarta.validation.Valid;
@@ -29,6 +31,12 @@ public class AuthController {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
        }
        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest)
+    {
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 
 
